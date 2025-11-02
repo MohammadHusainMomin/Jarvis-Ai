@@ -22,41 +22,45 @@ btn.addEventListener('click', () => {
 
 function speak(text) {
   const utterance = new SpeechSynthesisUtterance(text);
-  const voices = window.speechSynthesis.getVoices();
 
-  //  Prefer only MALE voices (Google/Microsoft)
+  let voices = window.speechSynthesis.getVoices();
+
+  if (!voices.length) {
+    // Force reload voices (some browsers delay this)
+    window.speechSynthesis.onvoiceschanged = () => {
+      voices = window.speechSynthesis.getVoices();
+    };
+  }
+
+  // Preferred male voices
   const preferredMaleVoices = [
     "Google UK English Male",
-    "Microsoft David Desktop",
-    "Microsoft Mark Desktop",
-    "Google US English", // Some male-sounding variants
+    "Google US English",
+    "Microsoft David Desktop - English (United States)",
+    "Microsoft Mark Desktop - English (United States)",
     "Google हिंदी Male"
   ];
 
-  // Select a male voice if available
   let selectedVoice = voices.find(v =>
     preferredMaleVoices.some(name => v.name.toLowerCase().includes(name.toLowerCase()))
   );
 
-  // If none of the preferred are found, fallback to any EN male voice
+  // Fallback — pick first English male-sounding voice
   if (!selectedVoice) {
     selectedVoice = voices.find(v =>
-      (v.lang.startsWith("en") || v.lang.startsWith("hi")) &&
+      v.lang.startsWith("en") &&
       !v.name.toLowerCase().includes("female") &&
-      !v.name.toLowerCase().includes("zira") &&   // Microsoft Zira is female
-      !v.name.toLowerCase().includes("aria")      // Microsoft Aria is female
+      !v.name.toLowerCase().includes("zira") &&
+      !v.name.toLowerCase().includes("aria")
     );
   }
 
-  if (selectedVoice) {
-    utterance.voice = selectedVoice;
-  }
+  // Fallback to default
+  utterance.rate = 0.9;   // slightly slower
+  utterance.pitch = 0.4;  // lower pitch = deeper voice
+  utterance.volume = 1; 
 
-  utterance.rate = 1;
-  utterance.pitch = 1; // normal tone for male
-  utterance.volume = 1;
-
-  console.log("🎙️ Speaking with male voice:", selectedVoice?.name || "default male");
+  console.log("🎙️ Speaking with:", utterance.voice?.name || "default");
   window.speechSynthesis.speak(utterance);
 }
 
