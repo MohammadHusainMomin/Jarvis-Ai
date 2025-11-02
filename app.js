@@ -55,7 +55,7 @@ function speak(text) {
   utterance.rate = 1;
   utterance.pitch = 1; // normal tone for male
   utterance.volume = 1;
-  
+
   console.log("🎙️ Speaking with male voice:", selectedVoice?.name || "default male");
   window.speechSynthesis.speak(utterance);
 }
@@ -149,7 +149,7 @@ function takeCommand(message) {
 
 async function getGeminiResponse(query) {
   try {
-    const response = await fetch("http://localhost:5000/gemini", {
+    const response = await fetch("https://jarvis-ai-qsar.onrender.com/gemini", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ query })
