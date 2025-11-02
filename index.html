@@ -23,12 +23,53 @@
                     <span class="logo-text">J.A.R.V.I.S</span>
                     <div class="logo-glow"></div>
                 </div>
+                <div class="header-controls">
+                    <button class="theme-toggle" title="Toggle dark/light mode">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="settings-button" title="Settings">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                </div>
                 <div class="status-indicator">
                     <span class="status-dot"></span>
                     <span class="status-text">ONLINE</span>
                 </div>
             </div>
         </header>
+
+        <!-- Settings Modal -->
+        <div class="settings-modal" id="settingsModal">
+            <div class="settings-content">
+                <div class="settings-header">
+                    <h2>Settings</h2>
+                    <button class="close-settings">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="settings-body">
+                    <div class="settings-group">
+                        <label for="userName">Your Name:</label>
+                        <input type="text" id="userName" placeholder="Enter your name" class="settings-input">
+                    </div>
+                    <div class="settings-group">
+                        <label for="personality">Personality Mode:</label>
+                        <select id="personality" class="settings-select">
+                            <option value="jarvis">Jarvis (Professional)</option>
+                            <option value="tony">Tony Stark (Witty)</option>
+                            <option value="funny">Funny (Humorous)</option>
+                            <option value="calm">Calm (Serene)</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <label>
+                            <input type="checkbox" id="continuousListening" class="settings-checkbox">
+                            Enable Continuous Listening Mode
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Main Content -->
         <section class="main">
@@ -50,17 +91,29 @@
                     </div>
 
                     <p class="subtitle">JUST A RATHER VERY INTELLIGENT SYSTEM</p>
-                    <p class="greeting-text">I am your AI Virtual Assistant. How may I assist you today?</p>
+                    <p class="greeting-text" id="greetingText">I am your AI Virtual Assistant. How may I assist you today?</p>
                 </div>
 
                 <!-- Voice Input Panel -->
                 <div class="input-section">
-                    <div class="voice-visualizer">
+                    <div class="voice-visualizer" id="voiceVisualizer">
                         <div class="bar bar-1"></div>
                         <div class="bar bar-2"></div>
                         <div class="bar bar-3"></div>
                         <div class="bar bar-4"></div>
                         <div class="bar bar-5"></div>
+                    </div>
+
+                    <div class="listening-indicator" id="listeningIndicator" style="display: none;">
+                        <span class="listening-dot"></span>
+                        <span>Listening...</span>
+                    </div>
+
+                    <div class="typing-indicator" id="typingIndicator" style="display: none;">
+                        <span class="typing-dot"></span>
+                        <span class="typing-dot"></span>
+                        <span class="typing-dot"></span>
+                        <span>Thinking...</span>
                     </div>
 
                     <div class="input-panel">
